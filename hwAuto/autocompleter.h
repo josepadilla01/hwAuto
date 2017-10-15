@@ -4,8 +4,10 @@
 
 #include <vector>
 #include <string>
-
+#include <fstream>
+#include <iostream>
 using namespace std;
+
 
 class Autocompleter
 {
@@ -30,7 +32,28 @@ class Autocompleter
 		// Hint: check out the stol function in <string>
 		//
 		// Must run in O(n*log(n)) time.
-		Autocompleter(string filename);
+
+		
+		Autocompleter(string filename)
+		{
+			ifstream inFile;
+			inFile.open("words.txt");
+
+			string s;
+			Node *newNode;
+
+			inFile >> root->e.s;
+			inFile >> root->e.freq;
+
+			while (!inFile.eof())
+			{
+				newNode = new Node();
+				inFile >> newNode->e.s;
+				inFile >> newNode->e.freq;
+			}
+
+
+		}
 
 		// Returns the number of words in the dictionary
 		// of possible completions. 
@@ -82,6 +105,17 @@ class Autocompleter
 		class Node
 		{
 			public:
+				Node()
+				{
+					left = right = nullptr;
+				}
+
+				Node(Entry e)
+				{
+					this->e = e;
+					left = right = nullptr;
+				}
+
 				Entry e;
 				Node* left;
 				Node* right;
