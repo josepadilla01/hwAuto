@@ -1,29 +1,66 @@
 #include "autocompleter.h"
+#include <algorithm>
 
-int Autocompleter::size()
+Autocompleter::Autocompleter(string filename)
 {
-	return size_recurse(root);
-}
+	ifstream inFile;
+	inFile.open("words.txt");
 
-int Autocompleter::size_recurse(Node *root)
-{
-	return (size_recurse(root->left) + 1 + size_recurse(root->right));
-}
+	vector<Entry> vEntries;
+	Entry e;
 
-void Autocompleter::completions(string x, vector<string> &C)
-{
-	
-}
-
-void Autocompleter::completions_recurse(string x, Node* root, vector<Entry> &E)
-{
-	if (root == nullptr)
-		return;
-	
-	//recurse
-	if (root->e.s[0] == x[0])
+	while (true)
 	{
-		E.push_back(root->e.s);
-		return(completions_recurse(x, root->left, E) && completions_recurse(x, root->right, E));
+		inFile >> e.s;
+		inFile >> e.freq;
+
+		if (e.s == "")
+			break;
+
+		vEntries.push_back(e);
 	}
+
+	inFile.close();
+	sort(vEntries.begin(), vEntries.end(), compare_s);
+
+	balanced_tree_recurse(vEntries, 0, vEntries.size() - 1);
+	
 }
+
+//int Autocompleter::size()
+//{
+//	return size_recurse(root);
+//}
+//
+//int Autocompleter::size_recurse(Node *root)
+//{
+//	return (size_recurse(root->left) + 1 + size_recurse(root->right));
+//}
+//
+//void Autocompleter::completions(string x, vector<string> &C)
+//{
+//	vector<Entry> E;
+//	completions_recurse(x, root, E);
+//	for (int i = 0; i < E.size(); i++)
+//	{
+//		C.push_back(E[i].s);
+//	}
+//}
+//
+//void Autocompleter::completions_recurse(string x, Node* root, vector<Entry> &E)
+//{
+//	
+//	if (root == nullptr)
+//		return;
+//	
+//	//recurse
+//	if (root->e.s <= x)
+//	{
+//		
+//		E.push_back(root->e);
+//		completions_recurse(x, root->left, E);
+//		cout << root->left->e.freq;
+//	}
+//	else
+//		completions_recurse(x, root->right, E);
+//}

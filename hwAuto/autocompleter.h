@@ -34,26 +34,7 @@ class Autocompleter
 		// Must run in O(n*log(n)) time.
 
 		
-		Autocompleter(string filename)
-		{
-			ifstream inFile;
-			inFile.open("words.txt");
-
-			string s;
-			Node *newNode;
-
-			inFile >> root->e.s;
-			inFile >> root->e.freq;
-
-			while (!inFile.eof())
-			{
-				newNode = new Node();
-				inFile >> newNode->e.s;
-				inFile >> newNode->e.freq;
-			}
-
-
-		}
+		Autocompleter(string filename);
 
 		// Returns the number of words in the dictionary
 		// of possible completions. 
