@@ -4,39 +4,59 @@
 Autocompleter::Autocompleter(string filename)
 {
 	ifstream inFile;
-	inFile.open("words.txt");
+	inFile.open(filename);
 
 	vector<Entry> vEntries;
-	Entry e;
 
-	while (true)
+	while (!inFile.eof())
 	{
+		Entry e;
 		inFile >> e.s;
 		inFile >> e.freq;
-
-		if (e.s == "")
-			break;
-
 		vEntries.push_back(e);
+		
 	}
+
 
 	inFile.close();
 	sort(vEntries.begin(), vEntries.end(), compare_s);
 
-	balanced_tree_recurse(vEntries, 0, vEntries.size() - 1);
-	
+	root = balanced_tree_recurse(vEntries, 0, vEntries.size() - 1);
+
+
 }
 
-//int Autocompleter::size()
-//{
-//	return size_recurse(root);
-//}
-//
-//int Autocompleter::size_recurse(Node *root)
-//{
-//	return (size_recurse(root->left) + 1 + size_recurse(root->right));
-//}
-//
+Autocompleter::Node* Autocompleter::balanced_tree_recurse(vector<Entry> &Ve, int start, int end)
+{
+	if (start > end)
+		return NULL;
+
+	int midpoint = (start + end) / 2;
+
+	Node *r = new Node(Ve[midpoint]);
+
+	r->left = balanced_tree_recurse(Ve, start, midpoint - 1);
+	r->right = balanced_tree_recurse(Ve, midpoint + 1, end);
+
+	return r;
+
+
+}
+
+int Autocompleter::size()
+{
+	return size_recurse(root);
+}
+
+int Autocompleter::size_recurse(Node *root)
+{
+	if (root == nullptr)
+	{
+		return 0;
+	}
+	return (1 + size_recurse(root->left) + size_recurse(root->right));
+}
+
 //void Autocompleter::completions(string x, vector<string> &C)
 //{
 //	vector<Entry> E;

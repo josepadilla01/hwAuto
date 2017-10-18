@@ -28,20 +28,20 @@ string random_string(int length)
 	return s;
 } 
 
-void interactive_mode()
-{
-	Autocompleter words("words.txt");
-	vector<string> C;
-	while (cin)
-	{
-		string line;
-		getline(cin, line);
-		words.completions(line, C);
-		for (string s : C)
-			cout << "    " << s << endl;
-	}
-	exit(0);
-}
+//void interactive_mode()
+//{
+//	Autocompleter words("words.txt");
+//	vector<string> C;
+//	while (cin)
+//	{
+//		string line;
+//		getline(cin, line);
+//		words.completions(line, C);
+//		for (string s : C)
+//			cout << "    " << s << endl;
+//	}
+//	exit(0);
+//}
 
 void test_size()
 {
@@ -57,7 +57,7 @@ void test_size()
 	float dur = duration<float>(end - start).count();
 	test(dur < 30.0);
 }
-//
+
 //void test_completion_count()
 //{
 //	system_clock::time_point start = system_clock::now();
@@ -249,7 +249,7 @@ int main()
 	// Enter a string and press Enter - the autocompletions
 	// results from words.txt are printed.
 	// 
-	interactive_mode();
+	//interactive_mode();
 
 	test_size();             // Deadline 1
 	//test_completion_count(); // Deadline 2
