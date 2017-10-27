@@ -73,15 +73,17 @@ int Autocompleter::completion_count_recurse(string x, Node* root)
 
 	if (root->e.s.substr(0, sLength) == x)
 	{
-		return 1 + completion_count_recurse(x, root->left);
+		return 1 + (completion_count_recurse(x, root->left) + completion_count_recurse(x, root->right));
 	}
 	else if (root->e.s.substr(0, sLength) > x)
 	{
-		return 0 + completion_count_recurse(x, root->left);
+		return completion_count_recurse(x, root->left);
 	}
 	else
-		completion_count_recurse(x, root->right);
+		return completion_count_recurse(x, root->right);
 }
+
+
 
 //void Autocompleter::completions(string x, vector<string> &C)
 //{

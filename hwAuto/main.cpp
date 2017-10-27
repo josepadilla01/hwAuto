@@ -205,29 +205,29 @@ void test_completion_count()
 //	test(dur < 30.0);
 //}
 //
-//void test_perf()
-//{
-//	// Test constructor efficiency
-//	system_clock::time_point start = system_clock::now();
-//	Autocompleter words("words.txt");
-//	system_clock::time_point end = system_clock::now();
-//	float dur = duration<float>(end - start).count();
-//	test(dur < 7.0);
-//
-//	// Test size() efficiency
-//	start = system_clock::now();
-//	test(words.size() == 300000);
-//	end = system_clock::now();	
-//	dur = duration<float>(end - start).count();
-//	test(dur < 0.02);
-//
-//	// Test completion_count() efficiency
-//	start = system_clock::now();
-//	for (int i = 0; i < 10000; ++i)
-//		words.completion_count(random_string(3));
-//	end = system_clock::now();
-//	dur = duration<float>(end - start).count();
-//	test(dur < 0.4);
+void test_perf()
+{
+	// Test constructor efficiency
+	system_clock::time_point start = system_clock::now();
+	Autocompleter words("words.txt");
+	system_clock::time_point end = system_clock::now();
+	float dur = duration<float>(end - start).count();
+	test(dur < 7.0);
+
+	// Test size() efficiency
+	start = system_clock::now();
+	test(words.size() == 300000);
+	end = system_clock::now();	
+	dur = duration<float>(end - start).count();
+	test(dur < 0.02);
+
+	// Test completion_count() efficiency
+	start = system_clock::now();
+	for (int i = 0; i < 10000; ++i)
+		words.completion_count(random_string(3));
+	end = system_clock::now();
+	dur = duration<float>(end - start).count();
+	test(dur < 0.4);
 //
 //	// Test completions() efficiency
 //	vector<string> results;
@@ -237,7 +237,7 @@ void test_completion_count()
 //	end = system_clock::now();
 //	dur = duration<float>(end - start).count();
 //	test(dur < 1.3);	
-//}
+}
 
 int main()
 {
@@ -254,7 +254,7 @@ int main()
 	test_size();             // Deadline 1
 	test_completion_count(); // Deadline 2
 	//test_completions();      // Deadline 3
-	//test_perf();             // Deadline 4
+	test_perf();             // Deadline 4
 	cout << "Assignment complete." << endl;
 }
 

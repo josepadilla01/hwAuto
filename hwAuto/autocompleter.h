@@ -31,9 +31,7 @@ class Autocompleter
 		//
 		// Hint: check out the stol function in <string>
 		//
-		// Must run in O(n*log(n)) time.
-
-		
+		// Must run in O(n*log(n)) time.	
 		Autocompleter(string filename);
 
 		// Returns the number of words in the dictionary
@@ -46,22 +44,16 @@ class Autocompleter
 		// that start with x.
 		// 
 		// Must run in O(log(n) + k) time.
-		int completion_count(string x);
-	
-		// Fills C with the completions of x, ordered from most
-		// most-to-least frequent.
-		// 
-		// Must run in O(log(n) + k*log(k)) time.
-		void completions(string x, vector<string> &C);
+		int completion_count(string x);	
 
 	private:
 		// A helper class that stores
 		// a word and a frequency.
 		class Entry
 		{
-			public:
-				string s;
-				long long int freq; // Real frequencies can be very big	
+		public:
+			string s;
+			long long int freq; // Real frequencies can be very big	
 		};
 
 		// Useful for sorting a list of Entry objects from
@@ -80,26 +72,30 @@ class Autocompleter
 			return e1.freq > e2.freq;
 		}
 
-
+		// Fills C with the completions of x, ordered from most
+		// most-to-least frequent.
+		// 
+		// Must run in O(log(n) + k*log(k)) time.
+		void completions(string x, vector<string> &C);
 
 		// A helper class that implements a binary search tree node.
 		class Node
 		{
-			public:
-				Node()
-				{
-					left = right = nullptr;
-				}
+		public:
+			Node()
+			{
+				left = right = nullptr;
+			}
 
-				Node(Entry e)
-				{
-					this->e = e;
-					left = right = nullptr;
-				}
+			Node(Entry e)
+			{
+				this->e = e;
+				left = right = nullptr;
+			}
 
-				Entry e;
-				Node* left;
-				Node* right;
+			Entry e;
+			Node* left;
+			Node* right;
 		};
 
 		// Root of the binary-search-tree-based data structure
@@ -115,6 +111,8 @@ class Autocompleter
 		// Returns the size of the tree with the given root.	
 		int size_recurse(Node* root);
 
+
+
 		// Returns the number of strings starting with x in 
 		// the tree with the given root.
 		int completion_count_recurse(string x, Node* root);
@@ -122,6 +120,7 @@ class Autocompleter
 		// Fills a vector with the strings that start with x in 
 		// the tree with the given root.
 		void completions_recurse(string x, Node* root, vector<Entry> &E);
+
 };
 
 #endif
